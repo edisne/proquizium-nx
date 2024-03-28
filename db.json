@@ -23,8 +23,7 @@
         }
       ],
       "condition": null,
-      "is_triggered": true,
-      "answer": 1
+      "is_triggered": true
     },
     {
       "id": 2,
@@ -55,8 +54,7 @@
           "value": 3
         }
       ],
-      "is_triggered": true,
-      "answer": [2]
+      "is_triggered": true
     },
     {
       "id": 3,
@@ -73,8 +71,7 @@
           "value": [2, 3]
         }
       ],
-      "is_triggered": false,
-      "answer": []
+      "is_triggered": false
     }
   ]
 }

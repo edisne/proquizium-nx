@@ -1,1 +1,5 @@
-<p-panel header="Questionaire"> </p-panel>
+<p-panel header="Questionaire">
+  @for (question of questions$ | async; track question.id) {
+    <app-question [question]="question"></app-question>
+  }
+</p-panel>
