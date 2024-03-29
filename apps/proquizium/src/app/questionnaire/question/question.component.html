@@ -1,33 +1,21 @@
 @if (question) {
   <div class="flex flex-column">
-    <h2>{{ question.title }}</h2>
-    <div class="flex m-2">
-      @if (question.type === 'single_choice') {
-        <p-dropdown
-          [options]="question.options"
-          [(ngModel)]="question.answer"
-          optionLabel="name"
-          [showClear]="false"
-          placeholder="Select an Option"
-        >
-          <ng-template pTemplate="selectedItem">
-            <div class="flex align-items-center gap-2" *ngIf="question.answer">
-              <div>{{ question.answer }}</div>
-            </div>
-          </ng-template>
-          <ng-template let-option pTemplate="item">
-            <div class="flex align-items-center gap-2">
-              <div>{{ option.verbose_name }}</div>
-            </div>
-          </ng-template>
-        </p-dropdown>
+    <div class="flex m-2 flex-column">
+      @if (question.type === 'single_choice' && question.is_triggered) {
+        <app-single-choice
+          [question]="question"
+          (userAnswer)="onSingleSelect()"
+        ></app-single-choice>
       }
-      @if (question.type === 'multiple_choice') {
+    </div>
+    <div class="flex m-2 flex-column">
+      @if (question.type === 'multiple_choice' && question.is_triggered) {
+        <h2>{{ question.title }}</h2>
         <p-multiSelect
           [options]="question.options"
-          [(ngModel)]="question.answer"
+          (onChange)="onOptionSelected($event)"
           optionLabel="option"
-          [placeholder]="'Select Options'"
+          [placeholder]="'Select options'"
         >
           <ng-template let-value pTemplate="selectedItems">
             <div
@@ -45,7 +33,10 @@
           </ng-template>
         </p-multiSelect>
       }
-      @if (question.type === 'multi_line_text') {
+    </div>
+    <div class="flex m-2 flex-column col-6">
+      @if (question.type === 'multi_line_text' && question.is_triggered) {
+        <h2>{{ question.title }}</h2>
         <textarea
           rows="5"
           cols="30"
@@ -56,5 +47,3 @@
     </div>
   </div>
 }
-
-{{ question?.answer | json }}

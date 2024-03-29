@@ -5,7 +5,7 @@ export const appRoutes: Route[] = [
     path: '',
     loadComponent: () =>
       import('./questionnaire/questionnaire.component').then(
-        (c) => c.QuestionnaireComponent
+        (c) => c.QuestionnaireComponent,
       ),
   },
 ];

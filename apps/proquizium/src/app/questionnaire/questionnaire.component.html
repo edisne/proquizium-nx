@@ -1,5 +1,8 @@
 <p-panel header="Questionaire">
   @for (question of questions$ | async; track question.id) {
-    <app-question [question]="question"></app-question>
+    <app-question
+      [question]="question"
+      (userAnswer)="onUserAnswer()"
+    ></app-question>
   }
 </p-panel>

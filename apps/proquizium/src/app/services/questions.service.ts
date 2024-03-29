@@ -1,42 +1,50 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Question } from '@proquizium/api-interfaces';
-
-const API_URL = 'http://localhost:3000';
+import { Condition, Question } from '@proquizium/api-interfaces';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import * as data from '../../assets/data.json';
 
 @Injectable({
   providedIn: 'root',
 })
 export class QuestionsService {
-  model = 'questions';
+  private questionsSubject = new BehaviorSubject<Question[]>([]);
+  questions$ = this.questionsSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor() {
+    const questions = JSON.parse(JSON.stringify(data)).default as Question[];
+    console.log(questions);
 
-  all() {
-    return this.http.get<Question[]>(this.getUrl());
+    this.questionsSubject.next(questions);
   }
 
-  find(id: number) {
-    return this.http.get<Question>(this.getUrlWithId(id));
-  }
-
-  create(question: Question) {
-    return this.http.post(this.getUrl(), question);
-  }
-
-  update(question: Question) {
-    return this.http.patch(this.getUrlWithId(question.id), question);
-  }
-
-  delete(question: Question) {
-    return this.http.delete(this.getUrlWithId(question.id));
-  }
-
-  private getUrl() {
-    return `${API_URL}/${this.model}`;
-  }
-
-  private getUrlWithId(id: number | undefined | null) {
-    return `${this.getUrl()}/${id}`;
+  evaluate() {
+    this.questions$.subscribe((questions: Question[]) => {
+      questions.forEach((question) => {
+        if (question.condition) {
+          question.is_triggered = question.condition.every(
+            (cond: Condition) => {
+              const requiredQuestion = questions.find(
+                (q: Question) => q.id === cond.question,
+              );
+              if (!requiredQuestion) return false;
+              const answer = requiredQuestion.answer;
+              if (Array.isArray(cond.value)) {
+                const sortedAnswer = Array.isArray(answer)
+                  ? [...answer].sort()
+                  : [];
+                const sortedValue = [...cond.value].sort();
+                return (
+                  JSON.stringify(sortedAnswer) === JSON.stringify(sortedValue)
+                );
+              } else {
+                return answer === cond.value;
+              }
+            },
+          );
+        } else {
+          question.is_triggered = true;
+        }
+      });
+    });
   }
 }

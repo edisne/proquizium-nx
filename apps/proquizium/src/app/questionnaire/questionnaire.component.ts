@@ -1,15 +1,10 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnInit,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Question } from '@proquizium/api-interfaces';
-import { QuestionsService } from '../services/questions.service';
 import { PanelModule } from 'primeng/panel';
-import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { QuestionComponent } from './question/question.component';
+import { QuestionsService } from '../services/questions.service';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'app-questionnaire',
@@ -19,11 +14,11 @@ import { QuestionComponent } from './question/question.component';
   styleUrl: './questionnaire.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class QuestionnaireComponent implements OnInit {
-  questions$: Observable<Question[]> | undefined;
-  private readonly questionService = inject(QuestionsService);
+export class QuestionnaireComponent {
+  private readonly questionsService = inject(QuestionsService);
+  questions$: Observable<Question[]> = this.questionsService.questions$;
 
-  ngOnInit(): void {
-    this.questions$ = this.questionService.all();
+  onUserAnswer() {
+    this.questionsService.evaluate();
   }
 }
