@@ -15,7 +15,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@proquizium/api-interfaces": ["libs/api-interfaces/src/index.ts"]
+      "@proquizium/api-interfaces": ["libs/api-interfaces/src/index.ts"],
+      "@proquizium/core-data": ["libs/core-data/src/index.ts"],
+      "@proquizium/questions": ["libs/core-state/src/index.ts"],
+      "@proquizium/testing": ["libs/testing/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
