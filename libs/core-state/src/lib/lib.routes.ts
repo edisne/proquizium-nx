@@ -11,3 +11,15 @@ export const questionsRoutes: Route[] = [
     ],
   },
 ];
+
+import { RootStoreConfig } from '@ngrx/store';
+
+const STORE_NAME = 'proquizium-questions-store';
+const storeConfig: RootStoreConfig<any, any> = {
+  runtimeChecks: {
+    strictActionImmutability: true,
+    strictActionSerializability: true,
+    strictStateImmutability: true,
+    strictStateSerializability: true,
+  },
+};

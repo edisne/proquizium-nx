@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Question } from '@proquizium/api-interfaces';
+import { tap } from 'rxjs';
 
-const API_URL = 'http://localhost:3100/api';
+const API_URL = 'http://localhost:3000/api';
 
 @Injectable({
   providedIn: 'root',
@@ -21,15 +22,15 @@ export class QuestionsService {
   }
 
   create(question: Question) {
-    return this.http.post(this.getUrl(), question);
+    return this.http.post<Question>(this.getUrl(), question);
   }
 
   update(question: Question) {
-    return this.http.patch(this.getUrlWithId(question.id), question);
+    return this.http.patch<Question>(this.getUrlWithId(question.id), question);
   }
 
   delete(question: Question) {
-    return this.http.delete(this.getUrlWithId(question.id));
+    return this.http.delete<Question>(this.getUrlWithId(question.id));
   }
 
   private getUrl() {

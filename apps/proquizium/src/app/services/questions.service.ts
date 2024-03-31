@@ -6,7 +6,7 @@ import * as data from '../../assets/data.json';
 @Injectable({
   providedIn: 'root',
 })
-export class QuestionsService {
+export class QuestionsServiceOld {
   private questionsSubject = new BehaviorSubject<Question[]>([]);
   questions$ = this.questionsSubject.asObservable();
 

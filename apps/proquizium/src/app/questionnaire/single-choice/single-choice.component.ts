@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Question } from '@proquizium/api-interfaces';
 import { DropdownChangeEvent, DropdownModule } from 'primeng/dropdown';
 
@@ -10,10 +10,13 @@ import { DropdownChangeEvent, DropdownModule } from 'primeng/dropdown';
   templateUrl: './single-choice.component.html',
   styleUrl: './single-choice.component.css',
 })
-export class SingleChoiceComponent {
+export class SingleChoiceComponent implements OnInit {
   @Input() question: Question | undefined;
   @Output() userAnswer: EventEmitter<Question> = new EventEmitter<Question>();
 
+  ngOnInit(): void {
+    console.log(this.question);
+  }
   onOptionChange(event: DropdownChangeEvent) {
     if (this.question) {
       this.question.answer = event.value.id;
