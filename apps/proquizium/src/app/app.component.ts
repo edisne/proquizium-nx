@@ -5,17 +5,23 @@ import { MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
+import { CommonModule } from '@angular/common';
 
 @Component({
   standalone: true,
-  imports: [RouterModule, MenuModule, PanelModule, MenubarModule, ButtonModule],
+  imports: [
+    RouterModule,
+    MenuModule,
+    PanelModule,
+    MenubarModule,
+    ButtonModule,
+    CommonModule,
+  ],
   selector: 'app-root',
   template: `
-    <p-menubar [model]="menuItems">
-      <p-button icon="pi pi-bars"></p-button>
-    </p-menubar>
+    <p-menubar [model]="menuItems" />
     <div class="layout-content">
-      <router-outlet></router-outlet>
+      <router-outlet />
     </div>
   `,
   styleUrl: './app.component.scss',
@@ -23,14 +29,14 @@ import { ButtonModule } from 'primeng/button';
 export class AppComponent {
   menuItems: MenuItem[] = [
     {
-      label: 'Item 1',
-      icon: 'pi pi-fw pi-file',
-      routerLink: ['link1'],
+      label: 'Proquizium',
+      icon: 'pi pi-question',
+      routerLink: ['/'],
     },
     {
-      label: 'Item 2',
-      icon: 'pi pi-fw pi-pencil',
-      routerLink: ['link2'],
+      label: 'Create',
+      icon: 'pi pi-save',
+      routerLink: ['create'],
     },
   ];
 }

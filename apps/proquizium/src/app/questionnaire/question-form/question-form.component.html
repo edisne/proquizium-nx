@@ -1,0 +1,73 @@
+<p-panel header="Question Form">
+  <form
+    [formGroup]="questionForm"
+    (ngSubmit)="onSubmit()"
+    class="flex flex-column justify-content-center col-6 gap-3"
+  >
+    <input
+      pInputText
+      type="text"
+      formControlName="sort_id"
+      placeholder="Sort ID"
+    />
+    <input pInputText type="text" formControlName="title" placeholder="Title" />
+
+    <p-dropdown
+      formControlName="type"
+      [options]="[
+        { label: 'Single Choice', value: 'single_choice' },
+        { label: 'Multiple Choice', value: 'multiple_choice' },
+        { label: 'Multi Line Text', value: 'multi_line_text' }
+      ]"
+      placeholder="Select a Type"
+    ></p-dropdown>
+    <div formArrayName="options" class="flex flex-row">
+      <div
+        *ngFor="let option of options.controls; let i = index"
+        [formGroupName]="i"
+      >
+        <input
+          pInputText
+          type="text"
+          formControlName="verbose_name"
+          placeholder="Verbose Name"
+          class="mr-3"
+        />
+        <input
+          pInputText
+          type="text"
+          formControlName="value"
+          placeholder="Value"
+          class="mr-3"
+        />
+      </div>
+      <p-button type="button" (click)="addOption()">Add Option</p-button>
+    </div>
+    <div formArrayName="condition" class="flex flex-row">
+      <div
+        *ngFor="let cond of condition.controls; let i = index"
+        [formGroupName]="i"
+      >
+        <input
+          pInputText
+          formControlName="question"
+          placeholder="Condition Question ID"
+          class="mr-3"
+        />
+        <input
+          pInputText
+          formControlName="value"
+          class="mr-3"
+          placeholder="Value"
+        />
+      </div>
+      <p-button type="button" (click)="addCondition()">Add Condition</p-button>
+    </div>
+    <p-checkbox
+      formControlName="is_triggered"
+      [binary]="true"
+      label="Is Triggered?"
+    ></p-checkbox>
+    <p-button type="submit">Create</p-button>
+  </form>
+</p-panel>

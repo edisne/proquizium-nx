@@ -21,7 +21,6 @@ import { Observable } from 'rxjs';
 })
 export class QuestionnaireComponent implements OnInit {
   private readonly questionsFacade = inject(QuestionsFacade);
-
   questions$: Observable<Question[]> = this.questionsFacade.allQuestions$;
 
   ngOnInit(): void {

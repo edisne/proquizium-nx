@@ -17,4 +17,16 @@ export const appRoutes: Route[] = [
       QuestionsFacade,
     ],
   },
+  {
+    path: 'create',
+    loadComponent: () =>
+      import('./questionnaire/question-form/question-form.component').then(
+        (c) => c.QuestionFormComponent,
+      ),
+    providers: [
+      provideState(fromQuestions.QUESTIONS_FEATURE_KEY, fromQuestions.reducers),
+      provideEffects(fromQuestions.QuestionsEffects),
+      QuestionsFacade,
+    ],
+  },
 ];

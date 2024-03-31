@@ -7,3 +7,27 @@
   font-size: 1 rem;
   display: block;
 }
+
+.p-menubar {
+  background-color: #1e30f3;
+}
+
+.p-menuitem-text {
+  color: white;
+}
+
+.p-menuitem-icon {
+  color: white;
+}
+
+.p-menuitem-content:hover {
+  background-color: #e21e80;
+}
+
+.p-card {
+  width: 30rem;
+}
+
+.p-panel-content {
+  background-color: #f1f1f1;
+}

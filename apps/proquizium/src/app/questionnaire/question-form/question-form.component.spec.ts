@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SingleChoiceComponent } from './single-choice.component';
+import { QuestionFormComponent } from './question-form.component';
 
-describe('SingleChoiceComponent', () => {
-  let component: SingleChoiceComponent;
-  let fixture: ComponentFixture<SingleChoiceComponent>;
+describe('QuestionFormComponent', () => {
+  let component: QuestionFormComponent;
+  let fixture: ComponentFixture<QuestionFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SingleChoiceComponent],
+      imports: [QuestionFormComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SingleChoiceComponent);
+    fixture = TestBed.createComponent(QuestionFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
