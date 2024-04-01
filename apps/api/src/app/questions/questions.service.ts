@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreateQuestionDto } from './dto/create-question.dto';
 import { UpdateQuestionDto } from './dto/update-question.dto';
 
@@ -10,7 +10,6 @@ import { Condition } from './entities/condition.entity';
 
 @Injectable()
 export class QuestionsService {
-  private readonly logger = new Logger(QuestionsService.name);
   constructor(
     @InjectRepository(Question)
     private questionRepository: Repository<Question>,
@@ -106,7 +105,6 @@ export class QuestionsService {
           if (!requiredQuestion) return false;
           const answer = requiredQuestion.answer;
           if (Array.isArray(cond.value) && cond.value.length > 1) {
-            this.logger.log('inside array condition' + cond.value);
             const sortedAnswer = Array.isArray(answer)
               ? [...answer].sort()
               : [];
@@ -117,7 +115,6 @@ export class QuestionsService {
             return Number(answer) === Number(cond.value);
           }
         });
-        this.logger.log('IS TRIGGERED:' + question.is_triggered);
       } else {
         question.is_triggered = true;
       }
