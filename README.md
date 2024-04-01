@@ -20,7 +20,20 @@ Run `npx nx build proquizium` to build the application. The build artifacts are 
 
 ## Running tasks
 
-To execute tasks with Nx use the following syntax:
+To start both Angular app and NestJS API use the following syntax:
+
+```
+npm run serve:all
+```
+
+or individually:
+
+```
+npm run serve:web
+npm run serve:api
+```
+
+Additionaly to execute tasks with Nx use the following syntax:
 
 ```
 npx nx <target> <project> <...options>
