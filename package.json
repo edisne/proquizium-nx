@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "serve:web": "nx serve proquizium -o",
+    "serve:api": "nx serve api",
     "serve:all": "nx run-many --target=serve --projects=api,proquizium --parallel"
   },
   "private": true,
