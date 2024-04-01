@@ -48,7 +48,7 @@ export class QuestionnaireComponent implements OnInit {
     this.questionsFacade.deleteQuestion(question);
   }
 
-  onUserAnswer() {
-    console.log('USER ANSWERED');
+  onUserAnswer($event: Question) {
+    this.questionsFacade.updateQuestion($event);
   }
 }

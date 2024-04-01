@@ -5,7 +5,7 @@
         <h2>{{ question.title }}</h2>
         <p-dropdown
           [options]="question.options"
-          (onChange)="onOptionChange($event)"
+          (onChange)="onSingleSelect($event)"
           optionLabel="name"
           [showClear]="false"
           placeholder="Select option"
@@ -28,7 +28,7 @@
         <h2>{{ question.title }}</h2>
         <p-multiSelect
           [options]="question.options"
-          (onChange)="onOptionSelected($event)"
+          (onChange)="onMultiSelect($event)"
           optionLabel="option"
           [placeholder]="'Select options'"
         >

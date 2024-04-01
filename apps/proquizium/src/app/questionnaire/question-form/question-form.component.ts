@@ -16,6 +16,7 @@ import { PanelModule } from 'primeng/panel';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { CheckboxModule } from 'primeng/checkbox';
+import { Condition } from '@proquizium/api-interfaces';
 
 @Component({
   selector: 'app-question-form',
@@ -52,8 +53,15 @@ export class QuestionFormComponent {
   });
 
   onSubmit() {
-    console.log(this.questionForm.value);
-    this.questionsFacade.createQuestion(this.questionForm.value);
+    const formValue = this.questionForm.value;
+
+    formValue.condition.forEach((cond: any) => {
+      if (cond.value.includes(',')) {
+        cond.value = cond.value.split(',').map(Number);
+      }
+    });
+
+    this.questionsFacade.createQuestion(formValue);
   }
 
   get options(): FormArray {
@@ -76,8 +84,8 @@ export class QuestionFormComponent {
   addCondition() {
     this.condition.push(
       this.fb.group({
-        question: [''],
-        value: [''],
+        conditionalQuestion: [''],
+        value: [null],
       }),
     );
   }

@@ -2,9 +2,7 @@
   @for (question of questions$ | async; track question.id) {
     <app-question
       [question]="question"
-      (userAnswer)="onUserAnswer()"
+      (userAnswer)="onUserAnswer($event)"
     ></app-question>
   }
 </p-panel>
-
-{{ questions$ | async | json }}

@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Question } from '@proquizium/api-interfaces';
 import { QuestionsService } from '@proquizium/core-data';
 import { of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, concatMap, map, switchMap, tap } from 'rxjs/operators';
 import { QuestionsActions } from './questions.actions';
 import { pessimisticUpdate } from '@nx/angular';
 
@@ -15,7 +15,7 @@ export class QuestionsEffects {
   loadQuestions$ = createEffect(() =>
     this.actions$.pipe(
       ofType(QuestionsActions.loadQuestions),
-      switchMap(() =>
+      concatMap(() =>
         this.questionService.all().pipe(
           map((questions: Question[]) => {
             return QuestionsActions.loadQuestionsSuccess({ questions });
@@ -70,9 +70,10 @@ export class QuestionsEffects {
           this.questionService
             .update(action.question)
             .pipe(
-              map((question: Question) =>
+              concatMap((question: Question) => [
                 QuestionsActions.updateQuestionSuccess({ question }),
-              ),
+                QuestionsActions.loadQuestions(),
+              ]),
             ),
         onError: (action, error) =>
           QuestionsActions.updateQuestionFailure({ error }),

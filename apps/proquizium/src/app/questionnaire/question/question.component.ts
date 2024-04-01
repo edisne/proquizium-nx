@@ -28,19 +28,28 @@ export class QuestionComponent {
   @Input() question: Question | undefined;
   @Output() userAnswer: EventEmitter<Question> = new EventEmitter<Question>();
 
-  onSingleSelect() {
-    this.userAnswer.emit();
-  }
-
-  onOptionChange(event: DropdownChangeEvent) {
+  onSingleSelect(event: DropdownChangeEvent) {
     if (this.question) {
-      this.questionsFacade.updateQuestion({
+      const updatedQuestion = {
         ...this.question,
         answer: event.value.id,
-      });
+      };
+      this.userAnswer.emit(updatedQuestion);
     }
-    this.questionsFacade.loadQuestions();
   }
+
+  onMultiSelect($event: MultiSelectChangeEvent) {
+    if (this.question) {
+      const updatedQuestion = {
+        ...this.question,
+        answer: [...$event.value.map((option: Option) => option.id)],
+      };
+      console.log('Updated question', updatedQuestion.answer);
+
+      this.userAnswer.emit(updatedQuestion);
+    }
+  }
+
   getOptionName(selectedValue: number | number[]) {
     if (this.question?.options) {
       const option = this.question.options.find(
@@ -49,13 +58,6 @@ export class QuestionComponent {
       return option ? option.verbose_name : '';
     }
     return '';
-  }
-
-  onOptionSelected($event: MultiSelectChangeEvent) {
-    if (this.question) {
-      this.question.answer = $event.value.map((option: Option) => option.id);
-    }
-    this.userAnswer.emit(this.question);
   }
 
   identify(_: any, item: Option) {
